@@ -1,34 +1,14 @@
 
 use std::collections::HashMap;
 pub mod camera;
+pub mod websocket;
+
 mod image;
+
 
 pub use camera::Camera;
 pub use image::Image;
 
-
-
-
-
-// pub struct Image {
-
-// }
-
-// impl Image {
-//   pub fn new() -> image::Image {
-//     image::Image{
-//       image_bytes: 73,
-//       printable_image: 42
-//     }
-//   }
-// }
-
-// pub fn plop() -> image::Image{
-//   image::Image{
-//     image_bytes: 75,
-//     printable_image: 42
-//   }
-// }
 
 
 pub fn test() {
