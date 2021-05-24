@@ -4,6 +4,8 @@ use photobooth::camera;
 use photobooth::websocket;
 use photobooth::websocket::{WebSocketData};
 
+// use std::process::Command;
+
 extern crate gphoto;
 
 fn main() {
@@ -13,8 +15,22 @@ fn main() {
     match gphoto::Camera::autodetect(&mut context){
         Ok(c) => {
             let mut camera = c;
-            let summary = camera.summary(&mut context).unwrap();
+            // let _ = camera.summary(&mut context).unwrap();
 
+            camera.get_config_from_path("main/settings/iso", &mut context);
+
+            // let t = camera.get_config(&mut context).unwrap();
+            // println!(">> GET {:?}", t);
+
+            // let t = camera.get_single_config(&mut context).unwrap();
+            // println!(">> GET {:?}", t);
+
+            // let t = camera.set_config(&mut context).unwrap();
+            // println!(">> SET {:?}", t);
+            
+
+            // let t = camera.get_config(&mut context).unwrap();
+            // println!(">> GET AFTER SET {:?}", t);
 
             // let capture = camera.capture_image(&mut context).unwrap();
             // let mut file = gphoto::FileMedia::create(Path::new(&*capture.basename())).unwrap();
@@ -23,17 +39,17 @@ fn main() {
             println!("Camera connected !");
             // println!("{}", summary);
 
-            for storage in camera.storage(&mut context).unwrap() {
-                println!("       base dir = {:?}", storage.base_dir());
-                println!("          label = {:?}", storage.label());
-                println!("    description = {:?}", storage.description());
-                println!("   storage type = {:?}", storage.storage_type());
-                println!("filesystem type = {:?}", storage.filesystem_type());
-                println!("    access type = {:?}", storage.access_type());
-                println!("    capacity kb = {:?}", storage.capacity_kbytes());
-                println!("        free kb = {:?}", storage.free_kbytes());
-                println!("    free images = {:?}", storage.free_images());
-            }
+            // for storage in camera.storage(&mut context).unwrap() {
+            //     println!("       base dir = {:?}", storage.base_dir());
+            //     println!("          label = {:?}", storage.label());
+            //     println!("    description = {:?}", storage.description());
+            //     println!("   storage type = {:?}", storage.storage_type());
+            //     println!("filesystem type = {:?}", storage.filesystem_type());
+            //     println!("    access type = {:?}", storage.access_type());
+            //     println!("    capacity kb = {:?}", storage.capacity_kbytes());
+            //     println!("        free kb = {:?}", storage.free_kbytes());
+            //     println!("    free images = {:?}", storage.free_images());
+            // }
         },
         Err(err) => {
             if err.kind() == gphoto::ErrorKind::ModelNotFound {
@@ -45,15 +61,15 @@ fn main() {
     };
   
     
-    let camera_instance = Camera::new();
-    camera::gphoto::init();
+    // let camera_instance = Camera::new();
+    // camera::gphoto::init();
 
-    let p = photobooth::Image::new(1003);
+    // let p = photobooth::Image::new(1003);
 
-    println!("1: {:?}", p.image_bytes);
-    println!("2: {:?}", camera_instance.is_connected());
+    // println!("1: {:?}", p.image_bytes);
+    // println!("2: {:?}", camera_instance.is_connected());
 
-    websocket::start(3065, handle_websocket);
+    // websocket::start(3065, handle_websocket);
 }
 
 
