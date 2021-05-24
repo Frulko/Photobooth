@@ -140,8 +140,6 @@ dependencies = [
 [[package]]
 name = "gphoto"
 version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d543e8db1bb694737f67c20a7452c93caa0e7139a4fad34a8f4a31e0f079133c"
 dependencies = [
  "gphoto2-sys",
  "libc",
@@ -150,8 +148,6 @@ dependencies = [
 [[package]]
 name = "gphoto2-sys"
 version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be5a250bd1765bd17762e68468c1ed14517eeb0e414699810072598511d7f898"
 dependencies = [
  "libc",
  "pkg-config",

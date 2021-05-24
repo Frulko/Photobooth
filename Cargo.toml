@@ -8,5 +8,9 @@ edition = "2018"
 
 [dependencies]
 tungstenite = "0.13.0"
-gphoto = "0.1.2"
+# gphoto = "0.1.2"
 serde_json = "1.0"
+
+
+[dependencies.gphoto]
+path = "./libs/gphoto-rs"
