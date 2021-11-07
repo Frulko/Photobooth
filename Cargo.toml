@@ -8,5 +8,6 @@ edition = "2018"
 
 [dependencies]
 tungstenite = "0.13.0"
-gphoto = "0.1.2"
 serde_json = "1.0"
+rouille = "3.4.0"
+gphoto = { path = "../gphoto-rs" }
