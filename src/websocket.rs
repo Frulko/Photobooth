@@ -4,6 +4,7 @@ use std::{
 };
 use tungstenite::{accept, handshake::HandshakeRole, Error, HandshakeError, Message, Result};
 use serde_json;
+use serde_json::json;
 
 
 pub enum WebSocketData {
@@ -24,8 +25,19 @@ fn must_not_block<Role: HandshakeRole>(err: HandshakeError<Role>) -> Error {
 
 
 
+
 fn handle_client(stream: TcpStream, callback: fn(obj: WebSocketData)) -> Result<()> {
+  let john = json!({
+    "name": "John Doe",
+    "age": 43,
+    "phones": [
+        "+44 1234567",
+        "+44 2345678"
+    ]
+  });
+
   let mut socket = accept(stream).map_err(must_not_block)?;
+
   loop {
       match socket.read_message()? {
           msg @ Message::Text(_) | msg @ Message::Binary(_) => {
@@ -34,10 +46,12 @@ fn handle_client(stream: TcpStream, callback: fn(obj: WebSocketData)) -> Result<
             match serde_json::from_str(msg_data.as_str()) {
               Ok(t) => {
                 callback(WebSocketData::JSON(t));
+                socket.write_message(Message::Text(john.to_string().into())).unwrap();
               },
               Err(_) => { // fallback behavior classic Text
                 // socket.write_message(Message::Text("oldway".into())).unwrap();
                 callback(WebSocketData::Text(msg_data));
+                socket.write_message(Message::Text("Hello WebSocket".into())).unwrap();
               }
             }
           }
@@ -46,9 +60,8 @@ fn handle_client(stream: TcpStream, callback: fn(obj: WebSocketData)) -> Result<
   }
 }
 
-pub fn start(port: i32, callback: fn(obj: WebSocketData)) {
-
-  let host = "127.0.0.1";
+pub fn start(host: &str, port: i32, callback: fn(obj: WebSocketData)) {
+  // let host = "127.0.0.1";
   let address = format!("{}:{}", host, port);
 
   println!(">> websocket start at: {}", address);
